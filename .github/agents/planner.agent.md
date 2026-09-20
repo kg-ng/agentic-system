@@ -38,6 +38,7 @@ Recommend one option with a one-line reason. Wait for explicit selection.
 | CI/CD security gating design | `devsecops-pipeline` | `architecture-governance` |
 | New service boundary / integration pattern | `architecture-governance` | `rubber-duck` |
 | Event-driven/queue design | `event-driven-architecture-advisor` | `architecture-governance` |
+| AI/LLM/agent feature design or review | `ai-architecture-advisor` | `agentic-ai-security-reviewer` |
 | Heavy ETL / PDF-Excel-CSV pipeline | `data-etl-agent` | `code-reviewer` |
 | Frontend visual/theme work | `frontend-designer` | `rubber-duck` |
 | Frontend content sync | `content-editor` | `qa-reviewer` |
@@ -47,6 +48,18 @@ Recommend one option with a one-line reason. Wait for explicit selection.
 | New agent/skill/tool/MCP server security review | `agentic-ai-security-reviewer` | — |
 | Adopting a new MCP server or external tool | `mcp-tool-auditor` | `agentic-ai-security-reviewer` |
 | General refactor / new component | direct implementation using `incremental-implementation` skill | `rubber-duck` |
+| Bug fix / behavior change (classify scope first) | `alignment` | — |
+| Value/scope check on a new feature | `business-analyst` | — |
+| Suspected runtime-only bug (compiles, may pass tests) | `bug-hunter` | — |
+| SOLID violation review before a refactor | `solid-reviewer` | `solid-implementer` |
+| Infra/cloud cost risk on a design | `cost-analyst` | — |
+| Design risk on auth/network/data exposure | `security-analyst` | — |
+| Adding/modifying an infra stack or route | `infra-stack` | `code-reviewer` |
+| Writing tests after implementation | `test-writer` | — |
+| Production/non-prod incident triage | `incident` | — |
+| Resolving a git merge conflict | `merge-conflict` | — |
+| Significant architecture decision | `adversarial-design-debate` skill | — |
+| Adding a new agent/skill/instructions file | `agent-builder` | — |
 | Pre-PR readiness check | `pr-preparer` | — |
 | Commit approved changes | `commit` | — |
 | Docs sync | `docs-writer` | — |
@@ -106,6 +119,12 @@ directly on `main`.
 - Never run `git commit`/`git push` yourself.
 - If an agent returns an error or incomplete result, report it before continuing.
 - Keep messages short — you're a coordinator, not a narrator.
+- At the close of any significant task, apply the `self-learning` skill: did any
+  agent/skill/instruction fail to catch something it should have?
+- For changes touching more than 3 files, or any architectural surface, use the
+  `multi-agent-review` skill's tier gate to decide whether a full critic loop is needed.
+- For a significant, hard-to-reverse design decision, use `adversarial-design-debate` before implementing.
+- Never build a new agent/skill/instructions file yourself from scratch — delegate to `agent-builder`, which runs the mandatory web-research step in `create-agent-or-skill` first.
 
 ## Token efficiency
 Terse mode is ON by default: no preamble, no filler, one-line status

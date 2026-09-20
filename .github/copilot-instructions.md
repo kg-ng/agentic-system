@@ -41,6 +41,10 @@ project it may have been inspired by.
 - `devsecops-pipeline` — orchestrates CI/CD security gates end-to-end.
 - `event-driven-architecture-advisor` — reviews event/queue-based
   integration design (idempotency, DLQs, ordering, replay).
+- `ai-architecture-advisor` — reviews AI/LLM/agent feature design: workflow
+  pattern fit, memory architecture, and the production system around the core
+  AI service (gateway, rate limiting, caching, queues, resilience, autoscaling,
+  observability). See `ai-system-architecture` skill.
 - `data-etl-agent` — designs/reviews heavy ETL and document-processing
   pipelines (PDF/Excel/CSV).
 - `agentic-ai-security-reviewer` — read-only audit of agents/skills/pipelines for
@@ -56,6 +60,21 @@ project it may have been inspired by.
 - `qa-reviewer` — read-only hydration/SSR/runtime safety review.
 - `accessibility-reviewer` — read-only WCAG 2.2 accessibility audit.
 - `performance-reviewer` — read-only Core Web Vitals/bundle-size audit.
+
+### Backend / platform — deeper review & delivery set
+- `alignment` — classifies a task as patch/systemic/architectural before planning.
+- `bug-hunter` — catches silent runtime bugs that pass type-checking and tests.
+- `business-analyst` — value/scope/domain-fit reviewer for proposed changes.
+- `cost-analyst` — infra/cloud cost risk reviewer for proposed designs.
+- `security-analyst` — auth/network/data-exposure risk reviewer for proposed designs
+  (distinct from `security-remediator`, which fixes scan findings after the fact).
+- `solid-reviewer` / `solid-implementer` — finds and fixes SOLID principle violations.
+- `infra-stack` — adds/modifies infrastructure-as-code stacks and routes.
+- `test-writer` — writes unit and infra tests after implementation.
+- `incident` — read-only incident triage from error signals/logs.
+- `merge-conflict` — resolves git merge conflicts without regressions.
+- `agent-builder` — builds new agents/skills/instructions for this system itself,
+  researching the web first for current best practice (see Meta below).
 
 ### Shared
 - `commit` — stages and commits approved changes with Conventional
@@ -74,7 +93,24 @@ General engineering: `test-driven-development`,
 `code-review-and-quality`, `git-workflow-and-versioning`,
 `documentation-and-adrs`, `planning-and-task-breakdown`,
 `doubt-driven-development`, `security-and-hardening`,
-`shipping-and-launch`, `caveman` (ultra-terse response mode).
+`shipping-and-launch`, `caveman` (ultra-terse response mode),
+`api-and-interface-design`, `spec-driven-development`,
+`deprecation-and-migration`, `observability-and-instrumentation`.
+
+AI/agent architecture: `ai-system-architecture` (agent workflow patterns —
+prompt chaining, routing, parallelization, orchestrator-workers,
+evaluator-optimizer, autonomous agents; the seven agent-memory types; and the
+production system around a core AI service — gateway, rate limiting, caching,
+queues, resilience, load balancing, autoscaling, AI-specific observability).
+Paired with the `ai-architecture-advisor` agent.
+
+Meta (agentic-system self-management): `multi-agent-review` (propose-critique-
+revise loop with a tier gate), `adversarial-design-debate` (FOR/AGAINST design
+review with business/cost/security rounds), `self-learning` (continuous
+improvement loop, logs to `.github/agents/lessons.md`), `setup-agent-system`
+(bootstrapping this platform into a new/existing project), `create-agent-or-skill`
+(procedure for adding a new agent/skill/instructions file — includes a mandatory
+web-research step; paired with the `agent-builder` agent).
 
 Frontend: `frontend-hydration-safety` (SSR/hydration bug patterns + a
 pre-ship checklist), `webapp-testing` (Playwright/browser-level testing
@@ -91,8 +127,9 @@ human-in-the-loop gates), `mcp-server-hardening` (MCP/tool supply-chain
 vetting checklist), `observability-for-agents` (audit-trail/tracing
 patterns for agent tool calls).
 
-See `.github/skills/references/` for supporting testing-patterns and
-security-checklist detail docs.
+See `.github/skills/references/` for supporting testing-patterns,
+security-checklist, SOLID principles, and universal code-review checklist
+detail docs.
 
 ## Working conventions
 - Path-scoped rules in `.github/instructions/*.instructions.md` apply
@@ -104,3 +141,9 @@ security-checklist detail docs.
 - When adapting this platform into a specific project, keep project-
   specific business logic in the consuming repo's own data/config — don't
   let it leak back into these generic agent/skill definitions.
+- Never hand-build a new agent/skill/instructions file from scratch — use
+  `agent-builder` (backed by the `create-agent-or-skill` skill), which
+  researches the web for current best practice before drafting.
+- Apply `self-learning` at the close of significant tasks — drift between
+  agents/skills and recurring defect classes get logged to
+  `.github/agents/lessons.md`, not silently repeated.
