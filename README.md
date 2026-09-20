@@ -12,7 +12,7 @@ kind, not tied to any specific company's architecture or domain model.
 ## What's inside
 
 ```
-.github/agents/         18 Copilot agent definitions (planner, code review,
+.github/agents/         19 Copilot agent definitions (planner, code review,
                          security remediation, architecture governance,
                          DevSecOps gating, event-driven design, ETL,
                          agentic-AI security review, MCP tool auditing,
