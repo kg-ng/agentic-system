@@ -81,6 +81,10 @@ project it may have been inspired by.
   Commits messages. Never pushes.
 - `pr-preparer` — read-only pre-PR gate checklist + PR description draft.
 - `docs-writer` — keeps README/instructions/agent/skill docs in sync.
+- `bloat-reviewer` — read-only audit for unnecessary code/dependency/
+  abstraction growth (oversized files, dead code, speculative additions,
+  scope creep), enforcing `anti-bloat.instructions.md` as an active review
+  pass.
 - `rubber-duck` — generic adversarial logic reviewer, no domain bias.
 
 ## Skills

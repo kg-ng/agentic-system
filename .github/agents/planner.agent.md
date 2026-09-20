@@ -63,10 +63,12 @@ Recommend one option with a one-line reason. Wait for explicit selection.
 | Pre-PR readiness check | `pr-preparer` | — |
 | Commit approved changes | `commit` | — |
 | Docs sync | `docs-writer` | — |
+| Bloat/scope-creep audit (any change) | `bloat-reviewer` | — |
 
 For any code change, run one review pass (`rubber-duck` for logic/design,
 `code-reviewer` for correctness/security, `qa-reviewer` for frontend
-runtime safety) before considering the task done.
+runtime safety) before considering the task done. `bloat-reviewer` should
+also run whenever a change adds new files, dependencies, or abstractions.
 
 ### Build/test gate (never skip for code changes)
 Run the project's build/test command before any review pass and before the

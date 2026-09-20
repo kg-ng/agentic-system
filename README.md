@@ -12,17 +12,17 @@ kind, not tied to any specific company's architecture or domain model.
 ## What's inside
 
 ```
-.github/agents/         30 Copilot agent definitions (planner, code review,
-                         alignment/bug-hunter/business-analyst/cost-analyst/
-                         security-analyst design-review roles, SOLID reviewer +
-                         implementer, infra-stack, test-writer, incident,
-                         merge-conflict, security remediation, architecture
-                         governance, DevSecOps gating, event-driven design,
-                         AI/agent architecture advisor, ETL, agentic-AI
-                         security review, MCP tool auditing, agent-builder
-                         (self-extends the system), frontend design/content/
-                         QA/accessibility/performance, commit/PR/docs,
-                         rubber-duck)
+.github/agents/         32 Copilot agent definitions (planner, code review,
+                         bloat-reviewer, alignment/bug-hunter/business-analyst/
+                         cost-analyst/security-analyst design-review roles,
+                         SOLID reviewer + implementer, infra-stack, test-writer,
+                         incident, merge-conflict, security remediation,
+                         architecture governance, DevSecOps gating,
+                         event-driven design, AI/agent architecture advisor,
+                         ETL, agentic-AI security review, MCP tool auditing,
+                         agent-builder (self-extends the system), frontend
+                         design/content/QA/accessibility/performance,
+                         commit/PR/docs, rubber-duck)
 .github/skills/         reusable skill references — general engineering
                          practices, API/interface design, spec-driven
                          development, deprecation/migration, observability,
