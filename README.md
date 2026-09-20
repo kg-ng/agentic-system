@@ -12,19 +12,33 @@ kind, not tied to any specific company's architecture or domain model.
 ## What's inside
 
 ```
-.github/agents/         18 Copilot agent definitions (planner, code review,
-                         security remediation, architecture governance,
-                         DevSecOps gating, event-driven design, ETL,
-                         agentic-AI security review, MCP tool auditing,
-                         frontend design/content/QA/accessibility/performance,
-                         commit/PR/docs, rubber-duck)
+.github/agents/         30 Copilot agent definitions (planner, code review,
+                         alignment/bug-hunter/business-analyst/cost-analyst/
+                         security-analyst design-review roles, SOLID reviewer +
+                         implementer, infra-stack, test-writer, incident,
+                         merge-conflict, security remediation, architecture
+                         governance, DevSecOps gating, event-driven design,
+                         AI/agent architecture advisor, ETL, agentic-AI
+                         security review, MCP tool auditing, agent-builder
+                         (self-extends the system), frontend design/content/
+                         QA/accessibility/performance, commit/PR/docs,
+                         rubber-duck)
 .github/skills/         reusable skill references — general engineering
-                         practices, frontend hydration safety + testing +
-                         accessibility/performance, PDF/Excel/CSV/ETL
-                         data-processing patterns, and agentic-AI-specific
-                         security (OWASP LLM Top 10, lethal trifecta, MCP
-                         supply chain, agent observability)
+                         practices, API/interface design, spec-driven
+                         development, deprecation/migration, observability,
+                         AI/agent system architecture (workflow patterns,
+                         memory types, gateway/caching/resilience/scaling
+                         around a core AI service), meta-skills for the
+                         agentic system itself (multi-agent-review,
+                         adversarial-design-debate, self-learning,
+                         setup-agent-system, create-agent-or-skill), frontend
+                         hydration safety + testing + accessibility/
+                         performance, PDF/Excel/CSV/ETL data-processing
+                         patterns, and agentic-AI-specific security (OWASP LLM
+                         Top 10, lethal trifecta, MCP supply chain, agent
+                         observability)
 .github/instructions/   path-scoped rules Copilot applies automatically
+                         (component conventions, anti-bloat, CI workflow rules)
 ```
 
 ## Getting started
@@ -35,6 +49,15 @@ kind, not tied to any specific company's architecture or domain model.
 3. If you're adapting this into a specific project, add your own
    project-specific data/config in the consuming repo — keep it out of
    these generic agent/skill definitions so this platform stays reusable.
+
+## Extending this system
+
+New agents/skills/instructions should go through `agent-builder` (backed by the
+`create-agent-or-skill` skill), which does a mandatory web-research pass before
+drafting — checking official docs and comparable published agent-system designs
+for current best practice, rather than drafting purely from static knowledge.
+Drift and recurring gaps are tracked via the `self-learning` skill, logged to
+`.github/agents/lessons.md`.
 
 ## Securing the agentic system itself
 Beyond securing the code an agent works on, this platform includes skills
