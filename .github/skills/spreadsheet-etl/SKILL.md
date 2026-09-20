@@ -1,3 +1,8 @@
+---
+name: spreadsheet-etl
+description: Reads, transforms, and writes Excel/CSV data at any scale — streaming, batching, schema validation, and reconciliation patterns. Use when an agent ingests spreadsheet/CSV data or needs to generate Excel/CSV exports.
+---
+
 # Spreadsheet & CSV ETL
 
 Reference for reading, transforming, and writing Excel/CSV data inside

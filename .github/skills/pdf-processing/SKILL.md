@@ -1,3 +1,8 @@
+---
+name: pdf-processing
+description: Extracts, generates, and validates PDF documents inside agentic pipelines — text/table extraction, form filling, and PDF generation. Use when an agent needs to read data out of PDFs or produce PDF reports/output.
+---
+
 # PDF Processing
 
 Reference for extracting, generating, and validating PDF documents inside

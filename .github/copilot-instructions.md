@@ -5,8 +5,9 @@ This repo is a **generic, reusable multi-agent engineering platform**: a
 set of Copilot agents, skills, and instructions covering both backend
 platform engineering (code review, security remediation, architecture
 governance, DevSecOps gating, event-driven design, heavy ETL/data
-pipelines) and frontend engineering (React/Next.js design-system work,
-content sync, hydration/SSR safety). It's designed to be dropped into (or
+pipelines, agentic-AI-specific security) and frontend engineering
+(React/Next.js design-system work, content sync, hydration/SSR safety,
+accessibility, performance). It's designed to be dropped into (or
 referenced from) other projects as a starting point for an agentic
 engineering workflow — it contains no project-specific business logic.
 
@@ -42,11 +43,19 @@ project it may have been inspired by.
   integration design (idempotency, DLQs, ordering, replay).
 - `data-etl-agent` — designs/reviews heavy ETL and document-processing
   pipelines (PDF/Excel/CSV).
+- `agentic-ai-security-reviewer` — read-only audit of agents/skills/pipelines for
+  agent-specific security risks (excessive agency, lethal-trifecta capability
+  combinations, missing human-in-the-loop gates, prompt-injection surface).
+- `mcp-tool-auditor` — read-only go/no-go vetting of a new MCP server or external
+  tool before it's wired into the system (publisher trust, tool-description
+  integrity, permission scope).
 
 ### Frontend
 - `frontend-designer` — design-system/visual work. No content changes.
 - `content-editor` — data-driven content sync. No styling changes.
 - `qa-reviewer` — read-only hydration/SSR/runtime safety review.
+- `accessibility-reviewer` — read-only WCAG 2.2 accessibility audit.
+- `performance-reviewer` — read-only Core Web Vitals/bundle-size audit.
 
 ### Shared
 - `commit` — stages and commits approved changes with Conventional
@@ -64,11 +73,19 @@ General engineering: `test-driven-development`,
 `shipping-and-launch`, `caveman` (ultra-terse response mode).
 
 Frontend: `frontend-hydration-safety` (SSR/hydration bug patterns + a
-pre-ship checklist).
+pre-ship checklist), `webapp-testing` (Playwright/browser-level testing
+patterns), `accessibility-and-performance` (WCAG 2.2 + Core Web Vitals
+checklist).
 
 Data/ETL: `pdf-processing`, `spreadsheet-etl`, `data-pipeline-hardening`
 (heavy ETL reliability patterns: idempotency, backpressure, dead-lettering,
 observability).
+
+Agentic AI security: `agentic-ai-security` (OWASP LLM Top 10 + Agentic AI
+threats, the "lethal trifecta", least-privilege tool scoping,
+human-in-the-loop gates), `mcp-server-hardening` (MCP/tool supply-chain
+vetting checklist), `observability-for-agents` (audit-trail/tracing
+patterns for agent tool calls).
 
 See `.github/skills/references/` for supporting testing-patterns and
 security-checklist detail docs.
@@ -77,6 +94,7 @@ security-checklist detail docs.
 - Path-scoped rules in `.github/instructions/*.instructions.md` apply
   automatically to matching files — read them before editing.
 - Never skip a review pass for a code change (see `planner`'s agent map).
+- Any new/changed agent, skill, or MCP/tool integration must pass `agentic-ai-security-reviewer` before it's considered done.
 - Never commit/push without going through `commit`'s branch-check and
   build-gate steps.
 - When adapting this platform into a specific project, keep project-

@@ -1,3 +1,8 @@
+---
+name: data-pipeline-hardening
+description: General reliability and safety patterns for heavy ETL or document-processing pipelines: idempotency, backpressure, dead-lettering, and observability. Use when designing or reviewing any batch/streaming data pipeline, independent of file format.
+---
+
 # Data Pipeline Hardening
 
 General reliability/safety patterns for any heavy ETL or document-processing

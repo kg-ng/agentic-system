@@ -12,13 +12,18 @@ kind, not tied to any specific company's architecture or domain model.
 ## What's inside
 
 ```
-.github/agents/         14 Copilot agent definitions (planner, code review,
+.github/agents/         18 Copilot agent definitions (planner, code review,
                          security remediation, architecture governance,
                          DevSecOps gating, event-driven design, ETL,
-                         frontend design/content/QA, commit/PR/docs, rubber-duck)
+                         agentic-AI security review, MCP tool auditing,
+                         frontend design/content/QA/accessibility/performance,
+                         commit/PR/docs, rubber-duck)
 .github/skills/         reusable skill references — general engineering
-                         practices, frontend hydration safety, and
-                         PDF/Excel/CSV/ETL data-processing patterns
+                         practices, frontend hydration safety + testing +
+                         accessibility/performance, PDF/Excel/CSV/ETL
+                         data-processing patterns, and agentic-AI-specific
+                         security (OWASP LLM Top 10, lethal trifecta, MCP
+                         supply chain, agent observability)
 .github/instructions/   path-scoped rules Copilot applies automatically
 ```
 
@@ -30,6 +35,15 @@ kind, not tied to any specific company's architecture or domain model.
 3. If you're adapting this into a specific project, add your own
    project-specific data/config in the consuming repo — keep it out of
    these generic agent/skill definitions so this platform stays reusable.
+
+## Securing the agentic system itself
+Beyond securing the code an agent works on, this platform includes skills
+and agents that secure the **agents themselves** — grounded in the OWASP
+Top 10 for LLM Applications (2025), OWASP's Agentic AI – Threats and
+Mitigations paper, and Simon Willison's "lethal trifecta" concept:
+`agentic-ai-security`, `mcp-server-hardening`, and `observability-for-agents`
+skills, reviewed by the `agentic-ai-security-reviewer` and `mcp-tool-auditor`
+agents.
 
 ## Related project
 [`ai-security-pipeline`](https://github.com/kg-ng/ai-security-pipeline) —

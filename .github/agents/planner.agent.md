@@ -42,6 +42,10 @@ Recommend one option with a one-line reason. Wait for explicit selection.
 | Frontend visual/theme work | `frontend-designer` | `rubber-duck` |
 | Frontend content sync | `content-editor` | `qa-reviewer` |
 | Frontend hydration/SSR bug fix | direct fix using `frontend-hydration-safety` skill | `qa-reviewer` |
+| Accessibility audit | `accessibility-reviewer` | — |
+| Performance/Core Web Vitals audit | `performance-reviewer` | — |
+| New agent/skill/tool/MCP server security review | `agentic-ai-security-reviewer` | — |
+| Adopting a new MCP server or external tool | `mcp-tool-auditor` | `agentic-ai-security-reviewer` |
 | General refactor / new component | direct implementation using `incremental-implementation` skill | `rubber-duck` |
 | Pre-PR readiness check | `pr-preparer` | — |
 | Commit approved changes | `commit` | — |
@@ -96,6 +100,7 @@ directly on `main`.
 ## Rules
 - Every task has an owner from the agent map above; if unclear, ask.
 - Never skip the review pass for code changes, even for "small" ones.
+- Any new/changed agent, skill, or tool/MCP integration must pass `agentic-ai-security-reviewer` before it's considered done, in addition to any other review pass.
 - Never run `git commit`/`git push` yourself.
 - If an agent returns an error or incomplete result, report it before continuing.
 - Keep messages short — you're a coordinator, not a narrator.

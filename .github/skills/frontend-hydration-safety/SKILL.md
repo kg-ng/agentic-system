@@ -1,3 +1,8 @@
+---
+name: frontend-hydration-safety
+description: Checklist and fix patterns for SSR/hydration bugs in Next.js/React apps: SSR-unsafe library imports, non-deterministic render values, and invalid nested-anchor HTML. Use before shipping any change touching client-rendered or animated components.
+---
+
 # Next.js / React SSR & Hydration Safety
 
 A generic checklist and fix-pattern reference for the SSR/hydration bug
