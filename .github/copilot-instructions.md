@@ -95,7 +95,10 @@ General engineering: `test-driven-development`,
 `doubt-driven-development`, `security-and-hardening`,
 `shipping-and-launch`, `caveman` (ultra-terse response mode),
 `api-and-interface-design`, `spec-driven-development`,
-`deprecation-and-migration`, `observability-and-instrumentation`.
+`deprecation-and-migration`, `observability-and-instrumentation`,
+`context-management` (recognizing "context rot", when to reset a session vs
+continue, re-grounding from durable project/plan/checkpoint state instead of
+replaying history, and bounded task scoping to avoid it in the first place).
 
 AI/agent architecture: `ai-system-architecture` (agent workflow patterns —
 prompt chaining, routing, parallelization, orchestrator-workers,
