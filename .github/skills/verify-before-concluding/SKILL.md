@@ -30,11 +30,13 @@ critique") do not make two workflows the same.
 
 ## 3. Run the mechanical checks, don't eyeball them
 ```bash
-bash scripts/check-references.sh          # dangling refs, tools allowlists, tool names
-node scripts/build-claude.mjs --check     # generated .claude/ matches .github/
+grep -L '^tools:' .github/agents/*.agent.md     # agents with no tools allowlist
+grep -rhoE 'skills/[a-z0-9-]+/SKILL\.md' .github | sort -u | while read -r p; do
+  [ -e ".github/$p" ] || echo "MISSING: $p"      # dangling skill pointers
+done
 ```
-Add a check to the script when a new class of defect is found by hand, so it is
-caught automatically next time.
+When a new class of defect is found by hand, add a check for it to the project's own
+CI so it is caught automatically next time.
 
 ## 4. Replacing a broken reference
 Never swap in the "closest match" by name. Read the candidate target; if it does

@@ -150,11 +150,13 @@ Apply the `verify-before-concluding` skill: read the diff of every edit before
 committing, and never judge overlap with an existing agent/skill from its description alone.
 
 ```bash
-# Cross-references resolve and every agent declares a tools allowlist
-bash scripts/check-references.sh
+# Every agent declares a tools allowlist (no implicit "all tools")
+grep -L '^tools:' .github/agents/*.agent.md
 
-# Regenerate the Claude Code layout, then confirm it matches
-node scripts/build-claude.mjs && node scripts/build-claude.mjs --check
+# Every skill pointer resolves to a real file
+grep -rhoE 'skills/[a-z0-9-]+/SKILL\.md' .github | sort -u | while read -r p; do
+  [ -e ".github/$p" ] || echo "MISSING: $p"
+done
 
 # Every agent file has frontmatter
 for f in .github/agents/*.agent.md; do

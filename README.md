@@ -51,19 +51,19 @@ kind, not tied to any specific company's architecture or domain model.
    these generic agent/skill definitions so this platform stays reusable.
 
 ## Using it with Claude Code
-`.github/` is the single source of truth (Copilot layout). The Claude Code layout —
-`.claude/agents`, `.claude/skills`, `.claude/rules`, and `CLAUDE.md` — is **generated**
-from it; never edit those files by hand.
+This repo uses the GitHub Copilot layout under `.github/`. Claude Code reads a
+different layout, so copy and adapt rather than point it at `.github/` directly:
 
-```bash
-node scripts/build-claude.mjs           # regenerate after changing anything in .github/
-node scripts/build-claude.mjs --check   # fails if the generated files are out of date
-bash scripts/check-references.sh        # dangling references, tools allowlists, tool names
-```
+| Here (`.github/`) | Claude Code |
+|---|---|
+| `skills/<name>/SKILL.md` | `.claude/skills/<name>/SKILL.md` — same format, copy as is |
+| `agents/<name>.agent.md` | `.claude/agents/<name>.md` — rename; set `name:` to the file name; write `tools:` as a comma list of Claude Code tool names (`Read, Grep, Glob, Edit, Write, Bash`) instead of `["read", "search"]` |
+| `instructions/<name>.instructions.md` | `.claude/rules/<name>.md` — replace `applyTo:` with a `paths:` list |
+| `copilot-instructions.md` | `CLAUDE.md` |
 
-To use it in another project, copy `.claude/` and `CLAUDE.md` into that project (or
-into `~/.claude/` for personal use). No plugin install is involved — everything is
-plain, readable files.
+Paths mentioned inside the files (`.github/skills/...`) need the same rename. Use
+`~/.claude/` instead of a project's `.claude/` for personal use. No plugin install is
+involved — everything is plain, readable files.
 
 ## Extending this system
 
