@@ -87,7 +87,7 @@ degraded context is not.
 The point of a reset is to drop noise, not information. Re-ground from durable
 artifacts, in this priority order, instead of replaying full history:
 
-1. **Project instruction files** (`copilot-instructions.md` / equivalent,
+1. **Project instruction files** (`CLAUDE.md` / equivalent,
    `.claude/rules/*`) — durable rules that don't change per-session.
 2. **The plan/task-breakdown document** (see `planning-and-task-breakdown`) —
    what's done, what's next, acceptance criteria.

@@ -30,6 +30,15 @@ const TOOL_MAP = {
   todo: ["TodoWrite"], todowrite: ["TodoWrite"],
 };
 
+// Built-in Claude Code tool names we may emit, from https://code.claude.com/docs/en/tools-reference
+// (checked 2026-10-17). If Claude Code renames a tool, update this list and TOOL_MAP together.
+const CLAUDE_TOOLS = new Set([
+  "Agent", "Bash", "Edit", "Glob", "Grep", "NotebookEdit", "PowerShell", "Read", "TodoWrite", "WebFetch", "WebSearch", "Write",
+]);
+for (const [alias, names] of Object.entries(TOOL_MAP)) {
+  for (const n of names) if (!CLAUDE_TOOLS.has(n)) throw new Error(`TOOL_MAP '${alias}' emits '${n}', not a known Claude Code tool`);
+}
+
 const out = new Map(); // relative output path -> content
 
 const read = (p) => readFileSync(join(root, p), "utf8").replace(/\r\n/g, "\n");
@@ -41,6 +50,9 @@ function rewritePaths(text) {
   return text
     .replaceAll(".github/agents/lessons.md", keep)
     .replaceAll(".github/copilot-instructions.md", "CLAUDE.md")
+    .replaceAll(/\bcopilot-instructions(\.md)?\b/g, "CLAUDE.md")
+    .replaceAll(/\bCopilot (agents?|skills?)\b/g, "$1")
+    .replaceAll("Copilot context", "agent context")
     .replaceAll(/\.github\/skills\b/g, ".claude/skills") // also bare dir refs in shell snippets
     .replaceAll(/\.github\/agents\b/g, ".claude/agents")
     .replaceAll(/\.github\/instructions\b/g, ".claude/rules")
@@ -48,6 +60,20 @@ function rewritePaths(text) {
     .replaceAll(/(\*|\b[a-z0-9-]+)\.instructions\.md\b/g, "$1.md")
     .replaceAll(keep, ".github/agents/lessons.md");
 }
+
+// The files that create or bootstrap other agents/skills. In this repo .claude/ is generated, so anything
+// they create there would be deleted by the next build; tell them to edit the .github/ source instead.
+const META_SOURCES = new Set([
+  ".github/agents/agent-builder.agent.md",
+  ".github/skills/create-agent-or-skill/SKILL.md",
+  ".github/skills/setup-agent-system/SKILL.md",
+]);
+const META_NOTE =
+  "> **Layout note:** if `scripts/build-claude.mjs` exists in this repo, `.claude/` is generated from `.github/`. " +
+  "Create or edit agents, skills and rules under `.github/` (the source), then run `node scripts/build-claude.mjs`; " +
+  "files created directly in `.claude/` here are deleted by the next build. In a project without that script, " +
+  "create them in `.claude/` directly.\n\n";
+const withMetaNote = (src, text) => (META_SOURCES.has(src) ? text.replace(/^(---\n[\s\S]*?\n---\n)/, `$1\n${META_NOTE}`) : text);
 
 // Minimal frontmatter parser: scalars, inline arrays, and folded/literal blocks.
 function splitFrontmatter(text, file) {
@@ -83,10 +109,10 @@ for (const f of readdirSync(join(root, ".github/agents")).filter((n) => n.endsWi
     if (!mapped) throw new Error(`${src}: tool '${t}' has no Claude Code mapping`);
     for (const m of mapped) if (!tools.includes(m)) tools.push(m);
   }
-  const fm = [`name: ${name}`, `description: ${JSON.stringify(fields.description)}`];
+  const fm = [`name: ${name}`, `description: ${JSON.stringify(rewritePaths(fields.description))}`];
   if (tools.length) fm.push(`tools: ${tools.join(", ")}`);
   if (fields.model) fm.push(`model: ${fields.model}`);
-  out.set(`.claude/agents/${name}.md`, `---\n${fm.join("\n")}\n---\n${banner(src)}${rewritePaths(body)}`);
+  out.set(`.claude/agents/${name}.md`, withMetaNote(src, `---\n${fm.join("\n")}\n---\n`) + `${banner(src)}${rewritePaths(body)}`);
 }
 
 // ---- skills (copy every file; markdown gets path rewriting)
@@ -98,7 +124,7 @@ function walk(dir) {
 }
 for (const src of walk(".github/skills")) {
   const dest = src.replace(".github/skills/", ".claude/skills/");
-  out.set(dest, src.endsWith(".md") ? rewritePaths(read(src)) : readFileSync(join(root, src), "utf8"));
+  out.set(dest, src.endsWith(".md") ? withMetaNote(src, rewritePaths(read(src))) : readFileSync(join(root, src), "utf8"));
 }
 
 // ---- instructions -> rules

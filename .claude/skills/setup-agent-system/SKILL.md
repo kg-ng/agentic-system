@@ -6,6 +6,9 @@ description: >
   existing repo's agentic system for gaps against this platform's baseline.
 ---
 
+> **Layout note:** if `scripts/build-claude.mjs` exists in this repo, `.claude/` is generated from `.github/`. Create or edit agents, skills and rules under `.github/` (the source), then run `node scripts/build-claude.mjs`; files created directly in `.claude/` here are deleted by the next build. In a project without that script, create them in `.claude/` directly.
+
+
 Use this skill whenever this agentic-system platform is adopted by a new project,
 or when auditing an existing adopter for drift/gaps.
 
@@ -74,7 +77,7 @@ Before copying anything, answer:
 **Anti-bloat rule:** if the main instructions file grows beyond ~100 lines, extract
 its anti-bloat section into its own `anti-bloat.md`.
 
-## Step 6 — copilot-instructions.md
+## Step 6 — CLAUDE.md
 
 - [ ] Table of all agents with one-line descriptions, grouped by category
 - [ ] Table of all skills with trigger phrases

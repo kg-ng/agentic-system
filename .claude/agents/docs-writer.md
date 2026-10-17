@@ -1,6 +1,6 @@
 ---
 name: docs-writer
-description: "Updates markdown documentation (README, copilot-instructions, agent/skill docs) when code, content, or agent/skill behavior changes."
+description: "Updates markdown documentation (README, CLAUDE.md, agent/skill docs) when code, content, or agent/skill behavior changes."
 tools: Read, Edit, Write, Grep, Glob
 model: claude-haiku-4-5
 ---
@@ -12,7 +12,7 @@ restructure or rewrite existing content.
 ## Docs map
 ```
 README.md                        project overview — update for setup/script changes
-CLAUDE.md  repo-wide Copilot context — update when stack,
+CLAUDE.md  repo-wide agent context — update when stack,
                                   conventions, or known gotchas change
 .claude/agents/*.md        update when an agent's scope or behavior changes
 .claude/skills/*/SKILL.md        update when a documented pattern or checklist changes

@@ -1,12 +1,15 @@
 ---
 name: create-agent-or-skill
 description: >
-  Step-by-step procedure for adding a new Copilot agent, skill, or instructions
+  Step-by-step procedure for adding a new agent, skill, or instructions
   file to this system — including a mandatory web-research step to check for
   better, more current, or more widely-approved patterns before drafting from
   scratch. Use when asked to "add an agent", "create a skill", "we need something
   that does X", or when auditing this repo for a missing capability.
 ---
+
+> **Layout note:** if `scripts/build-claude.mjs` exists in this repo, `.claude/` is generated from `.github/`. Create or edit agents, skills and rules under `.github/` (the source), then run `node scripts/build-claude.mjs`; files created directly in `.claude/` here are deleted by the next build. In a project without that script, create them in `.claude/` directly.
+
 
 ## When to Use This Skill
 
