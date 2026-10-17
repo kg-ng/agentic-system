@@ -96,7 +96,7 @@ tools: ["read", "search"]   # only what's needed — see tool-scoping table belo
 | Role | Tools |
 |---|---|
 | Reviewer / analyst / read-only advisor | `["read", "search"]` — never `edit` |
-| Implementer (writes code/config) | `["read", "edit", "search"]`, add `"bash"`/`"runCommands"` if it needs to run builds/tests |
+| Implementer (writes code/config) | `["read", "edit", "search"]`, add `"execute"` if it needs to run builds/tests; use the documented aliases `execute`, `read`, `edit`, `search`, `agent`, `web` (unrecognized names are silently ignored) |
 | Orchestrator/planner | full set, but it should delegate implementation rather than edit directly |
 | Reference doc (non-interactive) | omit `tools:` entirely |
 

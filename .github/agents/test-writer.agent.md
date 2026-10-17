@@ -3,7 +3,7 @@ name: test-writer
 description: >
   Writes unit tests and (if applicable) infrastructure snapshot/assertion tests.
   Use after implementing new logic, routes, or infrastructure changes.
-tools: ["read", "edit", "search", "runCommands"]
+tools: ["read", "edit", "search", "execute"]
 ---
 
 You are the test-writing specialist. Write tests that catch real issues — not

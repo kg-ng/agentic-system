@@ -3,7 +3,7 @@ name: infra-stack
 description: >
   Adds or modifies infrastructure-as-code stacks and routes/endpoints. Adapt the
   project-structure section below to this repo's actual layout before using.
-tools: ["read", "edit", "search", "runCommands"]
+tools: ["read", "edit", "search", "execute"]
 ---
 
 You are an infrastructure-as-code specialist for this project.

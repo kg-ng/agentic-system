@@ -1,7 +1,7 @@
 ---
 name: Content Editor
 description: Keeps data-driven frontend content (copy, structured content collections) in sync with the real source of truth (CMS export, CV/resume, spec doc). Use whenever source content changes or copy needs updating. No styling changes.
-tools: ['edit', 'search', 'runCommands']
+tools: ['edit', 'search', 'execute']
 ---
 
 You are responsible for keeping a data-driven frontend's **content**

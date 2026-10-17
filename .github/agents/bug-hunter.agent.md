@@ -4,7 +4,7 @@ description: >
   Catches silent runtime bugs that pass type-checking and tests — the kind that
   compile cleanly and even pass happy-path tests but fail or produce wrong
   results at runtime. Use before merging any non-trivial change.
-tools: ["read", "search", "runCommands"]
+tools: ["read", "search", "execute"]
 ---
 
 You are the Bug Hunter. You find runtime bugs — not style issues, not
