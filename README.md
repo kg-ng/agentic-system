@@ -1,7 +1,7 @@
 # agentic-system
 
-A generic, reusable multi-agent engineering platform: Copilot agents,
-skills, and instructions for both backend platform engineering and
+A generic, reusable multi-agent engineering platform for Claude Code: agents,
+skills, and rules for both backend platform engineering and
 frontend engineering. Designed to be dropped into (or referenced from)
 any project as a starting point for an agentic engineering workflow.
 
@@ -12,7 +12,7 @@ kind, not tied to any specific company's architecture or domain model.
 ## What's inside
 
 ```
-.github/agents/         32 Copilot agent definitions (planner, code review,
+.claude/agents/         32 agent definitions (planner, code review,
                          bloat-reviewer, alignment/bug-hunter/business-analyst/
                          cost-analyst/security-analyst design-review roles,
                          SOLID reviewer + implementer, infra-stack, test-writer,
@@ -23,7 +23,7 @@ kind, not tied to any specific company's architecture or domain model.
                          agent-builder (self-extends the system), frontend
                          design/content/QA/accessibility/performance,
                          commit/PR/docs, rubber-duck)
-.github/skills/         reusable skill references — general engineering
+.claude/skills/         33 reusable skills — general engineering
                          practices, API/interface design, spec-driven
                          development, deprecation/migration, observability,
                          AI/agent system architecture (workflow patterns,
@@ -37,33 +37,35 @@ kind, not tied to any specific company's architecture or domain model.
                          patterns, and agentic-AI-specific security (OWASP LLM
                          Top 10, lethal trifecta, MCP supply chain, agent
                          observability)
-.github/instructions/   path-scoped rules Copilot applies automatically
+.claude/rules/          3 path-scoped rules Claude Code applies automatically
                          (component conventions, anti-bloat, CI workflow rules)
+CLAUDE.md               the index: overview, every agent and skill, working conventions
 ```
 
 ## Getting started
 1. Start with the `planner` agent — describe what you're trying to do and
    it will route you to the right agent(s) and present plan options before
    any implementation begins.
-2. Read `.github/copilot-instructions.md` for the full agent/skill map.
+2. Read `CLAUDE.md` for the full agent/skill map.
 3. If you're adapting this into a specific project, add your own
    project-specific data/config in the consuming repo — keep it out of
    these generic agent/skill definitions so this platform stays reusable.
 
-## Using it with Claude Code
-This repo uses the GitHub Copilot layout under `.github/`. Claude Code reads a
-different layout, so copy and adapt rather than point it at `.github/` directly:
+## Using it
+Everything is plain, readable files; no plugin install is involved. Copy what you need into a project:
 
-| Here (`.github/`) | Claude Code |
-|---|---|
-| `skills/<name>/SKILL.md` | `.claude/skills/<name>/SKILL.md` — same format, copy as is |
-| `agents/<name>.agent.md` | `.claude/agents/<name>.md` — rename; set `name:` to the file name; write `tools:` as a comma list of Claude Code tool names (`Read, Grep, Glob, Edit, Write, Bash`) instead of `["read", "search"]` |
-| `instructions/<name>.instructions.md` | `.claude/rules/<name>.md` — replace `applyTo:` with a `paths:` list |
-| `copilot-instructions.md` | `CLAUDE.md` |
+```bash
+cp -r .claude/agents .claude/skills .claude/rules your-project/.claude/
+```
 
-Paths mentioned inside the files (`.github/skills/...`) need the same rename. Use
-`~/.claude/` instead of a project's `.claude/` for personal use. No plugin install is
-involved — everything is plain, readable files.
+Or into `~/.claude/` for personal use, though installing all 32 agents at user level makes each of them a
+candidate for automatic delegation in every project. Per project, or a hand-picked subset, is the safer default.
+Do not copy this repo's `CLAUDE.md` over your own: it describes this repo. Merge the parts you want.
+
+To check it took, run `claude -p "ok" --agent no-such-agent` in the project; Claude Code answers with the
+list of agents it can see.
+
+This repo targets Claude Code only. It no longer ships a GitHub Copilot layout.
 
 ## Extending this system
 
