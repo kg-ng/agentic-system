@@ -124,6 +124,9 @@ Data/ETL: `pdf-processing`, `spreadsheet-etl`, `data-pipeline-hardening`
 (heavy ETL reliability patterns: idempotency, backpressure, dead-lettering,
 observability).
 
+Optional, stack-specific (load only if the project uses the stack): `iac-testing-aws-cdk`
+(CDK snapshot/assertion test patterns, used by `test-writer`).
+
 Agentic AI security: `agentic-ai-security` (OWASP LLM Top 10 + Agentic AI
 threats, the "lethal trifecta", least-privilege tool scoping,
 human-in-the-loop gates), `mcp-server-hardening` (MCP/tool supply-chain
