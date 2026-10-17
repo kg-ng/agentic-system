@@ -77,6 +77,27 @@ const META_NOTE =
   "create them in `.claude/` directly.\n\n";
 const withMetaNote = (src, text) => (META_SOURCES.has(src) ? text.replace(/^(---\n[\s\S]*?\n---\n)/, `$1\n${META_NOTE}`) : text);
 
+// Copilot-only tool syntax inside a source file must become Claude Code syntax in its generated copy,
+// otherwise the generated skill teaches agents to write frontmatter Claude Code does not understand.
+// Each replacement must match so drift in the source is noticed.
+const TOOL_SYNTAX = {
+  ".github/skills/create-agent-or-skill/SKILL.md": [
+    ['tools: ["read", "search"]   #', "tools: Read, Grep, Glob   #"],
+    ['| Reviewer / analyst / read-only advisor | `["read", "search"]` — never `edit` |', "| Reviewer / analyst / read-only advisor | `Read, Grep, Glob` — never `Edit`/`Write` |"],
+    [
+      '| Implementer (writes code/config) | `["read", "edit", "search"]`, add `"execute"` if it needs to run builds/tests; use the documented aliases `execute`, `read`, `edit`, `search`, `agent`, `web` (unrecognized names are silently ignored) |',
+      "| Implementer (writes code/config) | `Read, Edit, Write, Grep, Glob`, add `Bash` if it needs to run builds/tests; use Claude Code tool names (`Read`, `Grep`, `Glob`, `Edit`, `Write`, `Bash`, `Agent`, `WebFetch`, `WebSearch`) in a comma-separated list |",
+    ],
+  ],
+};
+function withToolSyntax(src, text) {
+  for (const [from, to] of TOOL_SYNTAX[src] || []) {
+    if (!text.includes(from)) throw new Error(`${src}: tool-syntax rule no longer matches: ${from}`);
+    text = text.replace(from, () => to);
+  }
+  return text;
+}
+
 // Minimal frontmatter parser: scalars, inline arrays, and folded/literal blocks.
 function splitFrontmatter(text, file) {
   const m = text.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
@@ -126,7 +147,7 @@ function walk(dir) {
 }
 for (const src of walk(".github/skills")) {
   const dest = src.replace(".github/skills/", ".claude/skills/");
-  out.set(dest, src.endsWith(".md") ? withMetaNote(src, rewritePaths(read(src))) : readFileSync(join(root, src), "utf8"));
+  out.set(dest, src.endsWith(".md") ? withMetaNote(src, withToolSyntax(src, rewritePaths(read(src)))) : readFileSync(join(root, src), "utf8"));
 }
 
 // ---- instructions -> rules

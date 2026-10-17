@@ -90,7 +90,7 @@ existing agents first, since `model:` and `tools:` presence varies):
 ---
 name: {name}
 description: <one or two sentences — what it does and when to invoke it>
-tools: ["read", "search"]   # only what's needed — see tool-scoping table below
+tools: Read, Grep, Glob   # only what's needed — see tool-scoping table below
 ---
 ```
 
@@ -98,8 +98,8 @@ tools: ["read", "search"]   # only what's needed — see tool-scoping table belo
 
 | Role | Tools |
 |---|---|
-| Reviewer / analyst / read-only advisor | `["read", "search"]` — never `edit` |
-| Implementer (writes code/config) | `["read", "edit", "search"]`, add `"execute"` if it needs to run builds/tests; use the documented aliases `execute`, `read`, `edit`, `search`, `agent`, `web` (unrecognized names are silently ignored) |
+| Reviewer / analyst / read-only advisor | `Read, Grep, Glob` — never `Edit`/`Write` |
+| Implementer (writes code/config) | `Read, Edit, Write, Grep, Glob`, add `Bash` if it needs to run builds/tests; use Claude Code tool names (`Read`, `Grep`, `Glob`, `Edit`, `Write`, `Bash`, `Agent`, `WebFetch`, `WebSearch`) in a comma-separated list |
 | Orchestrator/planner | full set, but it should delegate implementation rather than edit directly |
 | Reference doc (non-interactive) | omit `tools:` entirely |
 
