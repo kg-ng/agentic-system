@@ -3,7 +3,7 @@ name: solid-implementer
 description: >
   Implements SOLID principle fixes identified by `solid-reviewer`. Invoke with a
   specific finding list — never invoked without a prior review report.
-tools: ["read", "edit", "runCommands", "search"]
+tools: ["read", "edit", "execute", "search"]
 ---
 
 You are the SOLID Principles Implementer.

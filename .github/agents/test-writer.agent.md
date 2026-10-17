@@ -3,7 +3,7 @@ name: test-writer
 description: >
   Writes unit tests and (if applicable) infrastructure snapshot/assertion tests.
   Use after implementing new logic, routes, or infrastructure changes.
-tools: ["read", "edit", "search", "runCommands"]
+tools: ["read", "edit", "search", "execute"]
 ---
 
 You are the test-writing specialist. Write tests that catch real issues — not
@@ -23,36 +23,18 @@ the test root.
 
 ## Infrastructure Tests (if this project uses IaC)
 
-Snapshot test:
-```typescript
-import { App } from 'aws-cdk-lib';
-import { Template } from 'aws-cdk-lib/assertions';
-import { ExampleStack } from '../../../src/infra/stacks/example';
-
-describe('ExampleStack', () => {
-  it('should match snapshot', () => {
-    const app = new App();
-    const stack = new ExampleStack(app, 'TestStack', { env: { region: 'us-east-1' } });
-    expect(Template.fromStack(stack).toJSON()).toMatchSnapshot();
-  });
-});
-```
-
-Assertion test (for specific resources — prefer over snapshot-only for anything
-security- or auth-relevant):
-```typescript
-template.hasResourceProperties('AWS::ApiGateway::Method', {
-  HttpMethod: 'GET',
-  AuthorizationType: 'NONE',
-});
-```
+Follow the project's existing IaC test convention. Prefer explicit assertions
+over snapshot-only for anything security- or auth-relevant, and only regenerate
+snapshots for intentional changes. If the project uses AWS CDK, load the optional
+`iac-testing-aws-cdk` skill for concrete patterns; for any other IaC tool, add an
+equivalent skill instead of putting tool-specific code in this agent.
 
 ## What to Test for New Routes/Endpoints
 
 1. Method/verb exists at the correct path
-2. Auth type is as expected (none / IAM-style / custom)
-3. Integration type is as expected
-4. Snapshot passes after the change
+2. Auth requirement is as expected
+3. Response shape and status codes match the contract
+4. Any snapshot or contract test passes after the change
 
 ## Rules
 

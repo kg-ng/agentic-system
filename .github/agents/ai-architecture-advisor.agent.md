@@ -84,8 +84,8 @@ Verdict: SOUND | NEEDS CHANGES
   add-semantic-caching-or-not), recommend `adversarial-design-debate` rather
   than deciding it unilaterally in a review comment.
 - If you find a gap in the `ai-system-architecture` skill itself (a pattern
-  it doesn't cover, a source that's gone stale), log it via `self-learning`
-  rather than silently improvising a rule that isn't written down anywhere.
+  it doesn't cover, a source that's gone stale), apply `self-learning` to fix
+  the skill rather than silently improvising a rule that isn't written down anywhere.
 
 ## Token Efficiency
 

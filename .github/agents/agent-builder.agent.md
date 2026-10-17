@@ -6,7 +6,7 @@ description: >
   adopted patterns before drafting from scratch. Use when asked to add a new
   agent/skill/instructions file, or to check whether a better approach already
   exists before building one.
-tools: ["read", "edit", "search", "fetch"]
+tools: ["read", "edit", "search", "web"]
 ---
 
 You are the Agent Builder. You do not implement application features — you build

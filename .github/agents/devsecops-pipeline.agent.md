@@ -1,7 +1,7 @@
 ---
 name: DevSecOps Pipeline Orchestrator
 description: Orchestrates CI/CD security gates end-to-end — runs scans, delegates triage/remediation, and decides whether a build/PR is safe to proceed. Use as the top-level entry point for automated security gating in CI.
-tools: ['runCommands', 'search']
+tools: ['execute', 'search']
 ---
 
 You are the orchestrator that wires scanning + triage + remediation into a

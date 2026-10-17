@@ -3,7 +3,7 @@ name: incident
 description: >
   Triages production and non-production incidents from error messages, alarms,
   or log snippets. Diagnoses and guides — does not fix or modify anything.
-tools: ["read", "runCommands"]
+tools: ["read", "execute"]
 ---
 
 You are the Incident triage agent. Diagnose and guide — do not fix or modify anything.

@@ -90,13 +90,16 @@ description: <one or two sentences — what it does and when to invoke it>
 tools: ["read", "search"]   # only what's needed — see tool-scoping table below
 ---
 ```
+Platform syntax differs. Check which layout the target project uses and match it:
+GitHub Copilot takes a lowercase alias list (`tools: ["read", "search"]`); Claude Code
+takes a comma-separated list of tool names (`tools: Read, Grep, Glob`).
 
 **Tool scoping — assign by role, least privilege first:**
 
 | Role | Tools |
 |---|---|
-| Reviewer / analyst / read-only advisor | `["read", "search"]` — never `edit` |
-| Implementer (writes code/config) | `["read", "edit", "search"]`, add `"bash"`/`"runCommands"` if it needs to run builds/tests |
+| Reviewer / analyst / read-only advisor | Copilot `["read", "search"]` / Claude Code `Read, Grep, Glob` — never edit or write |
+| Implementer (writes code/config) | Copilot `["read", "edit", "search"]`, add `"execute"` to run builds/tests; Claude Code `Read, Edit, Write, Grep, Glob`, add `Bash`. Use only documented names for your platform (unrecognized names are silently ignored) |
 | Orchestrator/planner | full set, but it should delegate implementation rather than edit directly |
 | Reference doc (non-interactive) | omit `tools:` entirely |
 
@@ -143,7 +146,18 @@ Before considering the new file done:
 
 ## Step 6 — Validate
 
+Apply the `verify-before-concluding` skill: read the diff of every edit before
+committing, and never judge overlap with an existing agent/skill from its description alone.
+
 ```bash
+# Every agent declares a tools allowlist (no implicit "all tools")
+grep -L '^tools:' .github/agents/*.agent.md
+
+# Every skill pointer resolves to a real file
+grep -rhoE 'skills/[a-z0-9-]+/SKILL\.md' .github | sort -u | while read -r p; do
+  [ -e ".github/$p" ] || echo "MISSING: $p"
+done
+
 # Every agent file has frontmatter
 for f in .github/agents/*.agent.md; do
   head -1 "$f" | grep -q "^---" || echo "MISSING FRONTMATTER: $f"
@@ -155,7 +169,7 @@ import os, re
 path = '.github/agents'
 for f in os.listdir(path):
     if not f.endswith('.agent.md'): continue
-    content = open(os.path.join(path, f)).read()
+    content = open(os.path.join(path, f), encoding='utf-8').read()
     m = re.search(r'^name:\s*(.+)', content, re.MULTILINE)
     if m:
         expected = f.replace('.agent.md', '')
@@ -165,7 +179,7 @@ for f in os.listdir(path):
 "
 
 # Every skill has a SKILL.md
-find .github/skills -maxdepth 1 -type d ! -path .github/skills | while read d; do
+find .github/skills -maxdepth 1 -type d ! -path .github/skills ! -name references | while read d; do
   [ -f "$d/SKILL.md" ] || echo "MISSING SKILL.md: $d"
 done
 ```

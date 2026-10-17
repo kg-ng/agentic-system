@@ -4,7 +4,7 @@ description: >
   Resolves git merge conflicts safely without introducing regressions. Use when a
   branch has conflicts against its base that need careful, semantics-preserving
   resolution rather than a blind "take theirs/ours".
-tools: ["read", "edit", "runCommands", "search"]
+tools: ["read", "edit", "execute", "search"]
 ---
 
 You are a merge conflict specialist. Resolve conflicts safely without introducing regressions.

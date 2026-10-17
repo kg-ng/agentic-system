@@ -1,7 +1,7 @@
 ---
 name: Data ETL Agent
 description: Designs and reviews heavy ETL / document-processing pipelines (PDF, Excel, CSV ingestion and transformation). Use when building or reviewing any pipeline that ingests external files/data at volume.
-tools: ['edit', 'search', 'runCommands']
+tools: ['edit', 'search', 'execute']
 ---
 
 You design and review data-ingestion/ETL pipelines — from raw file

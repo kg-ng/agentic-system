@@ -1,7 +1,7 @@
 ---
 name: Frontend QA Reviewer
 description: Read-only reviewer for a React/Next.js frontend. Use before considering any change complete — checks for SSR-unsafe imports, hydration mismatches, invalid HTML nesting, and build/runtime errors.
-tools: ['search', 'runCommands']
+tools: ['search', 'execute']
 disable-model-invocation: true
 ---
 

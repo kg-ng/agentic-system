@@ -110,10 +110,12 @@ Paired with the `ai-architecture-advisor` agent.
 Meta (agentic-system self-management): `multi-agent-review` (propose-critique-
 revise loop with a tier gate), `adversarial-design-debate` (FOR/AGAINST design
 review with business/cost/security rounds), `self-learning` (continuous
-improvement loop, logs to `.github/agents/lessons.md`), `setup-agent-system`
+improvement loop that fixes the agent/skill/instruction that missed a gap), `setup-agent-system`
 (bootstrapping this platform into a new/existing project), `create-agent-or-skill`
 (procedure for adding a new agent/skill/instructions file — includes a mandatory
-web-research step; paired with the `agent-builder` agent).
+web-research step; paired with the `agent-builder` agent), `verify-before-concluding`
+(evidence discipline for audits and bulk edits: say what was read vs inferred,
+read bodies before judging overlap, run the mechanical checks, review every diff).
 
 Frontend: `frontend-hydration-safety` (SSR/hydration bug patterns + a
 pre-ship checklist), `webapp-testing` (Playwright/browser-level testing
@@ -123,6 +125,9 @@ checklist).
 Data/ETL: `pdf-processing`, `spreadsheet-etl`, `data-pipeline-hardening`
 (heavy ETL reliability patterns: idempotency, backpressure, dead-lettering,
 observability).
+
+Optional, stack-specific (load only if the project uses the stack): `iac-testing-aws-cdk`
+(CDK snapshot/assertion test patterns, used by `test-writer`).
 
 Agentic AI security: `agentic-ai-security` (OWASP LLM Top 10 + Agentic AI
 threats, the "lethal trifecta", least-privilege tool scoping,
@@ -148,5 +153,5 @@ detail docs.
   `agent-builder` (backed by the `create-agent-or-skill` skill), which
   researches the web for current best practice before drafting.
 - Apply `self-learning` at the close of significant tasks — drift between
-  agents/skills and recurring defect classes get logged to
-  `.github/agents/lessons.md`, not silently repeated.
+  agents/skills and recurring defect classes get fixed in the agent, skill, or
+  instruction that missed them, not silently repeated.

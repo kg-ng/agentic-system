@@ -58,7 +58,7 @@ Before copying anything, answer:
 ## Step 4 — Meta Skills (recommended for all adopters)
 
 - [ ] `multi-agent-review/SKILL.md` — propose-critique-revise loop
-- [ ] `self-learning/SKILL.md` — continuous improvement loop, `lessons.md`
+- [ ] `self-learning/SKILL.md` — continuous improvement loop
 - [ ] `adversarial-design-debate/SKILL.md` — FOR/AGAINST design review for significant decisions
 - [ ] `create-agent-or-skill/SKILL.md` — procedure (with mandatory web research step)
       for adding new agents/skills/instructions without duplicating or reinventing
@@ -96,7 +96,7 @@ import os, re
 path = '.github/agents'
 for f in os.listdir(path):
     if not f.endswith('.agent.md'): continue
-    content = open(os.path.join(path, f)).read()
+    content = open(os.path.join(path, f), encoding='utf-8').read()
     m = re.search(r'^name:\s*(.+)', content, re.MULTILINE)
     if m:
         expected = f.replace('.agent.md', '')
@@ -106,7 +106,7 @@ for f in os.listdir(path):
 "
 
 # Every skill has a SKILL.md
-find .github/skills -maxdepth 1 -type d ! -path .github/skills | while read d; do
+find .github/skills -maxdepth 1 -type d ! -path .github/skills ! -name references | while read d; do
   [ -f "$d/SKILL.md" ] || echo "MISSING SKILL.md: $d"
 done
 ```

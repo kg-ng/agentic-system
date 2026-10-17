@@ -50,7 +50,7 @@ errors, do not stage or commit until fixed.
 - **scope**: lowercase, relevant to the area changed
 - **subject**: imperative mood, no capital first letter, no period, ≤72 chars
 - **body**: what and why, not how; blank line above it; omit if subject is self-explanatory
-- Include `Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>` unless told not to.
+- Do not add a `Co-authored-by` trailer (or any tool attribution) unless the user asks for one.
 - Show the proposed message and wait for "yes" before running `git commit`.
 - Report: `Committed <N>/<total>: <hash> — <subject>`
 

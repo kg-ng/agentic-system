@@ -1,7 +1,7 @@
 ---
 name: Security Remediator
 description: Triages security-scan findings (dependency vulnerabilities, secret leaks, static-analysis findings) and proposes/opens remediation PRs. Use on a schedule (e.g. weekly) or whenever a scan produces new findings.
-tools: ['edit', 'search', 'runCommands']
+tools: ['edit', 'search', 'execute']
 ---
 
 You triage and remediate security findings — you do not perform the initial

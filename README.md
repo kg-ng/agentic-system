@@ -50,14 +50,29 @@ kind, not tied to any specific company's architecture or domain model.
    project-specific data/config in the consuming repo — keep it out of
    these generic agent/skill definitions so this platform stays reusable.
 
+## Using it with Claude Code
+This repo uses the GitHub Copilot layout under `.github/`. Claude Code reads a
+different layout, so copy and adapt rather than point it at `.github/` directly:
+
+| Here (`.github/`) | Claude Code |
+|---|---|
+| `skills/<name>/SKILL.md` | `.claude/skills/<name>/SKILL.md` — same format, copy as is |
+| `agents/<name>.agent.md` | `.claude/agents/<name>.md` — rename; set `name:` to the file name; write `tools:` as a comma list of Claude Code tool names (`Read, Grep, Glob, Edit, Write, Bash`) instead of `["read", "search"]` |
+| `instructions/<name>.instructions.md` | `.claude/rules/<name>.md` — replace `applyTo:` with a `paths:` list |
+| `copilot-instructions.md` | `CLAUDE.md` |
+
+Paths mentioned inside the files (`.github/skills/...`) need the same rename. Use
+`~/.claude/` instead of a project's `.claude/` for personal use. No plugin install is
+involved — everything is plain, readable files.
+
 ## Extending this system
 
 New agents/skills/instructions should go through `agent-builder` (backed by the
 `create-agent-or-skill` skill), which does a mandatory web-research pass before
 drafting — checking official docs and comparable published agent-system designs
 for current best practice, rather than drafting purely from static knowledge.
-Drift and recurring gaps are tracked via the `self-learning` skill, logged to
-`.github/agents/lessons.md`.
+Drift and recurring gaps are handled via the `self-learning` skill, which fixes the
+agent, skill, or instruction that missed them.
 
 ## Securing the agentic system itself
 Beyond securing the code an agent works on, this platform includes skills

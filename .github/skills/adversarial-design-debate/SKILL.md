@@ -17,8 +17,8 @@ synchronous calls here?"
 
 | Role | Agent | Job |
 |---|---|---|
-| Advocate | `rubber-duck` | Steelmans the proposal |
-| Challenger | `code-reviewer` (or `architecture-governance`) | Finds flaws and risks |
+| Advocate | The proposer (requesting agent or main session) | Steelmans the proposal |
+| Challenger | `rubber-duck`, `code-reviewer`, or `architecture-governance` | Finds flaws and risks |
 | Business Analyst | `business-analyst` | Evaluates value, scope, and domain fit |
 | Cost Analyst | `cost-analyst` | Identifies cost/resource risks |
 | Security Analyst | `security-analyst` | Checks auth, data exposure, network risk |
@@ -50,7 +50,7 @@ Context:
 
 ## Round 2 — Advocate Position
 
-`rubber-duck` argues FOR the proposal:
+The proposer argues FOR the proposal:
 
 ```
 ADVOCATE — Round 2
@@ -79,7 +79,7 @@ Counter to Advocate: <direct response to Round 2>
 
 ## Round 4 — Advocate Rebuttal
 
-`rubber-duck` responds to the Challenger:
+The proposer responds to the Challenger:
 
 ```
 ADVOCATE REBUTTAL — Round 4
