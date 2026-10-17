@@ -90,13 +90,16 @@ description: <one or two sentences — what it does and when to invoke it>
 tools: ["read", "search"]   # only what's needed — see tool-scoping table below
 ---
 ```
+Platform syntax differs. Check which layout the target project uses and match it:
+GitHub Copilot takes a lowercase alias list (`tools: ["read", "search"]`); Claude Code
+takes a comma-separated list of tool names (`tools: Read, Grep, Glob`).
 
 **Tool scoping — assign by role, least privilege first:**
 
 | Role | Tools |
 |---|---|
-| Reviewer / analyst / read-only advisor | `["read", "search"]` — never `edit` |
-| Implementer (writes code/config) | `["read", "edit", "search"]`, add `"execute"` if it needs to run builds/tests; use the documented aliases `execute`, `read`, `edit`, `search`, `agent`, `web` (unrecognized names are silently ignored) |
+| Reviewer / analyst / read-only advisor | Copilot `["read", "search"]` / Claude Code `Read, Grep, Glob` — never edit or write |
+| Implementer (writes code/config) | Copilot `["read", "edit", "search"]`, add `"execute"` to run builds/tests; Claude Code `Read, Edit, Write, Grep, Glob`, add `Bash`. Use only documented names for your platform (unrecognized names are silently ignored) |
 | Orchestrator/planner | full set, but it should delegate implementation rather than edit directly |
 | Reference doc (non-interactive) | omit `tools:` entirely |
 

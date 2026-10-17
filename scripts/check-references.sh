@@ -37,5 +37,11 @@ for f in .github/agents/*.agent.md; do
   done
 done
 
+# 6. generated Claude Code agents must use Claude Code tool syntax (comma list of names), not Copilot's ["alias"] list
+for f in .claude/agents/*.md; do
+  [ -e "$f" ] || continue
+  grep -m1 '^tools:' "$f" | tr -d '\r' | grep -q '[]["]' && { echo "Copilot tool syntax in Claude agent: $f"; fail=1; }
+done
+
 [ "$fail" -eq 0 ] && echo "references OK"
 exit "$fail"

@@ -90,16 +90,19 @@ existing agents first, since `model:` and `tools:` presence varies):
 ---
 name: {name}
 description: <one or two sentences — what it does and when to invoke it>
-tools: Read, Grep, Glob   # only what's needed — see tool-scoping table below
+tools: ["read", "search"]   # only what's needed — see tool-scoping table below
 ---
 ```
+Platform syntax differs. Check which layout the target project uses and match it:
+GitHub Copilot takes a lowercase alias list (`tools: ["read", "search"]`); Claude Code
+takes a comma-separated list of tool names (`tools: Read, Grep, Glob`).
 
 **Tool scoping — assign by role, least privilege first:**
 
 | Role | Tools |
 |---|---|
-| Reviewer / analyst / read-only advisor | `Read, Grep, Glob` — never `Edit`/`Write` |
-| Implementer (writes code/config) | `Read, Edit, Write, Grep, Glob`, add `Bash` if it needs to run builds/tests; use Claude Code tool names (`Read`, `Grep`, `Glob`, `Edit`, `Write`, `Bash`, `Agent`, `WebFetch`, `WebSearch`) in a comma-separated list |
+| Reviewer / analyst / read-only advisor | Copilot `["read", "search"]` / Claude Code `Read, Grep, Glob` — never edit or write |
+| Implementer (writes code/config) | Copilot `["read", "edit", "search"]`, add `"execute"` to run builds/tests; Claude Code `Read, Edit, Write, Grep, Glob`, add `Bash`. Use only documented names for your platform (unrecognized names are silently ignored) |
 | Orchestrator/planner | full set, but it should delegate implementation rather than edit directly |
 | Reference doc (non-interactive) | omit `tools:` entirely |
 
