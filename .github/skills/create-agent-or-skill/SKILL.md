@@ -143,6 +143,9 @@ Before considering the new file done:
 
 ## Step 6 — Validate
 
+Apply the `verify-before-concluding` skill: read the diff of every edit before
+committing, and never judge overlap with an existing agent/skill from its description alone.
+
 ```bash
 # Cross-references resolve and every agent declares a tools allowlist
 bash scripts/check-references.sh

@@ -125,6 +125,7 @@ directly on `main`.
 - For changes touching more than 3 files, or any architectural surface, use the
   `multi-agent-review` skill's tier gate to decide whether a full critic loop is needed.
 - For a significant, hard-to-reverse design decision, use `adversarial-design-debate` before implementing.
+- Before proposing to merge, cut, or rename agents/skills, or before committing a bulk or scripted edit, apply the `verify-before-concluding` skill.
 - Never build a new agent/skill/instructions file yourself from scratch — delegate to `agent-builder`, which runs the mandatory web-research step in `create-agent-or-skill` first.
 
 ## Token efficiency

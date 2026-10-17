@@ -113,7 +113,9 @@ review with business/cost/security rounds), `self-learning` (continuous
 improvement loop, logs to `.github/agents/lessons.md`), `setup-agent-system`
 (bootstrapping this platform into a new/existing project), `create-agent-or-skill`
 (procedure for adding a new agent/skill/instructions file — includes a mandatory
-web-research step; paired with the `agent-builder` agent).
+web-research step; paired with the `agent-builder` agent), `verify-before-concluding`
+(evidence discipline for audits and bulk edits: say what was read vs inferred,
+read bodies before judging overlap, run the mechanical checks, review every diff).
 
 Frontend: `frontend-hydration-safety` (SSR/hydration bug patterns + a
 pre-ship checklist), `webapp-testing` (Playwright/browser-level testing
