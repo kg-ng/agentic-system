@@ -45,6 +45,8 @@ not do the same job, remove the reference instead of redirecting it.
   read the resulting diff (`git diff -U0`) before staging.
 - Look for stray text, wrong line numbers, and unintended deletions.
 - One logical fix per commit, so a bad one can be reverted alone.
+- Never undo a deliberate test break with `git checkout`/`git restore` on a file that has
+  uncommitted work; it discards that work too. Commit first, or restore from a backup copy.
 - A passing build or check is not proof the content is right; re-read the diff.
 
 ## 6. Report honestly
