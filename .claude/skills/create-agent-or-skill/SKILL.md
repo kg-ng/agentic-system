@@ -66,7 +66,7 @@ copying an already-approved template verbatim with just a name change).
 
 | Symptom | Add |
 |---|---|
-| Recurring task needs a dedicated persona with judgment/tools | Agent (`.agent.md`) |
+| Recurring task needs a dedicated persona with judgment/tools | Agent (`.md`) |
 | Recurring *procedure* that doesn't need its own persona — a checklist, workflow, or reference | Skill (`SKILL.md`) |
 | A rule that should apply automatically to files matching a path | Instructions (`*.md`) |
 | Supporting detail too long for the skill body itself | Reference doc under `.claude/skills/references/` |
@@ -75,10 +75,10 @@ copying an already-approved template verbatim with just a name change).
 
 ## Step 2 — Name the File
 
-**Agent:** `{name}.agent.md` — kebab-case, no redundant prefix unless this system
+**Agent:** `{name}.md` — kebab-case, no redundant prefix unless this system
 namespaces agents by project/domain.
 **Skill:** `{name}/SKILL.md` — one directory per skill.
-**Instructions:** `{scope}.instructions.md` with `applyTo: "<glob>"` in frontmatter.
+**Instructions:** `{scope}.md` with `paths:` (a list of globs) in frontmatter.
 
 ---
 
@@ -166,18 +166,18 @@ python3 -c "
 import os, re
 path = '.claude/agents'
 for f in os.listdir(path):
-    if not f.endswith('.agent.md'): continue
-    content = open(os.path.join(path, f)).read()
+    if not f.endswith('.md'): continue
+    content = open(os.path.join(path, f), encoding='utf-8').read()
     m = re.search(r'^name:\s*(.+)', content, re.MULTILINE)
     if m:
-        expected = f.replace('.agent.md', '')
+        expected = f.replace('.md', '')
         got = m.group(1).strip().lower().replace(' ', '-')
         if got != expected:
             print(f'NAME MISMATCH: {f} -> name: {m.group(1).strip()}')
 "
 
 # Every skill has a SKILL.md
-find .claude/skills -maxdepth 1 -type d ! -path .claude/skills | while read d; do
+find .claude/skills -maxdepth 1 -type d ! -path .claude/skills ! -name references | while read d; do
   [ -f "$d/SKILL.md" ] || echo "MISSING SKILL.md: $d"
 done
 ```

@@ -69,7 +69,7 @@ Before copying anything, answer:
 
 ## Step 5 — Instructions
 
-- [ ] At least one `applyTo`-scoped instructions file for the main source directory
+- [ ] At least one `paths`-scoped instructions file for the main source directory
       (naming conventions, dead-code rules, anti-bloat rules)
 - [ ] A CI/workflow instructions file if the project has `.github/workflows/**`
       (timeouts, runner pinning, action version pins, concurrency, secrets handling)
@@ -88,7 +88,7 @@ its anti-bloat section into its own `anti-bloat.md`.
 ## Step 7 — Verify
 
 ```bash
-# Every .agent.md file has frontmatter
+# Every .md file has frontmatter
 for f in .claude/agents/*.md; do
   head -1 "$f" | grep -q "^---" || echo "MISSING FRONTMATTER: $f"
 done
@@ -98,18 +98,18 @@ python3 -c "
 import os, re
 path = '.claude/agents'
 for f in os.listdir(path):
-    if not f.endswith('.agent.md'): continue
-    content = open(os.path.join(path, f)).read()
+    if not f.endswith('.md'): continue
+    content = open(os.path.join(path, f), encoding='utf-8').read()
     m = re.search(r'^name:\s*(.+)', content, re.MULTILINE)
     if m:
-        expected = f.replace('.agent.md', '')
+        expected = f.replace('.md', '')
         got = m.group(1).strip().lower().replace(' ', '-')
         if got != expected:
             print(f'NAME MISMATCH: {f} -> name: {m.group(1).strip()}')
 "
 
 # Every skill has a SKILL.md
-find .claude/skills -maxdepth 1 -type d ! -path .claude/skills | while read d; do
+find .claude/skills -maxdepth 1 -type d ! -path .claude/skills ! -name references | while read d; do
   [ -f "$d/SKILL.md" ] || echo "MISSING SKILL.md: $d"
 done
 ```

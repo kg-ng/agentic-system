@@ -56,8 +56,10 @@ function rewritePaths(text) {
     .replaceAll(/\.github\/skills\b/g, ".claude/skills") // also bare dir refs in shell snippets
     .replaceAll(/\.github\/agents\b/g, ".claude/agents")
     .replaceAll(/\.github\/instructions\b/g, ".claude/rules")
-    .replaceAll(/(\*|\b[a-z0-9-]+)\.agent\.md\b/g, "$1.md")
-    .replaceAll(/(\*|\b[a-z0-9-]+)\.instructions\.md\b/g, "$1.md")
+    .replaceAll(".agent.md", ".md") // also bare suffixes in globs and shell/Python snippets
+    .replaceAll(".instructions.md", ".md")
+    .replaceAll('`applyTo: "<glob>"`', "`paths:` (a list of globs)") // Claude Code rules scope with paths:, not applyTo
+    .replaceAll("`applyTo`-scoped", "`paths`-scoped")
     .replaceAll(keep, ".github/agents/lessons.md");
 }
 

@@ -13,7 +13,7 @@ checklists.
 
 ## Scope
 Review any new or changed:
-- Agent definition (`.agent.md`) — its declared tools/permissions and the
+- Agent definition (`.md`) — its declared tools/permissions and the
   actions it's allowed to take.
 - Skill (`SKILL.md`) — its `allowed-tools` scope and any instructions that
   could be mistaken for content to execute rather than guidance to follow.
