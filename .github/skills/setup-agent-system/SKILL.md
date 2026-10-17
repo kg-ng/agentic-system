@@ -58,7 +58,7 @@ Before copying anything, answer:
 ## Step 4 — Meta Skills (recommended for all adopters)
 
 - [ ] `multi-agent-review/SKILL.md` — propose-critique-revise loop
-- [ ] `self-learning/SKILL.md` — continuous improvement loop, `lessons.md`
+- [ ] `self-learning/SKILL.md` — continuous improvement loop
 - [ ] `adversarial-design-debate/SKILL.md` — FOR/AGAINST design review for significant decisions
 - [ ] `create-agent-or-skill/SKILL.md` — procedure (with mandatory web research step)
       for adding new agents/skills/instructions without duplicating or reinventing

@@ -52,7 +52,7 @@ not do the same job, remove the reference instead of redirecting it.
 ## 6. Report honestly
 State outcomes as they are: what was fixed, what was left alone and why, what
 could not be verified. If an earlier claim turns out wrong, retract it explicitly
-and log it via the `self-learning` skill.
+and apply the `self-learning` skill so the checker that missed it is fixed.
 
 ## Common Rationalizations
 | Excuse | Reality |

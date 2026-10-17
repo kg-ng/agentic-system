@@ -10,7 +10,6 @@
 //   .github/skills/**                  -> .claude/skills/**            (same SKILL.md format, paths rewritten)
 //   .github/instructions/<n>.instructions.md -> .claude/rules/<n>.md  (applyTo -> paths)
 //   .github/copilot-instructions.md    -> CLAUDE.md
-//   .github/agents/lessons.md          stays where it is (shared log, not an agent)
 
 import { readFileSync, writeFileSync, readdirSync, mkdirSync, rmSync, existsSync, statSync } from "node:fs";
 import { join, dirname, relative } from "node:path";
@@ -44,11 +43,9 @@ const out = new Map(); // relative output path -> content
 const read = (p) => readFileSync(join(root, p), "utf8").replace(/\r\n/g, "\n");
 const banner = (src) => `<!-- GENERATED from ${src} by scripts/build-claude.mjs. Edit the source, not this file. -->\n`;
 
-// Rewrite references between generated files. lessons.md is intentionally left in .github.
+// Rewrite references between generated files.
 function rewritePaths(text) {
-  const keep = "\u0000LESSONS\u0000";
   return text
-    .replaceAll(".github/agents/lessons.md", keep)
     .replaceAll(".github/copilot-instructions.md", "CLAUDE.md")
     .replaceAll(/\bcopilot-instructions(\.md)?\b/g, "CLAUDE.md")
     .replaceAll(/\bCopilot (agents?|skills?)\b/g, "$1")
@@ -59,8 +56,7 @@ function rewritePaths(text) {
     .replaceAll(".agent.md", ".md") // also bare suffixes in globs and shell/Python snippets
     .replaceAll(".instructions.md", ".md")
     .replaceAll('`applyTo: "<glob>"`', "`paths:` (a list of globs)") // Claude Code rules scope with paths:, not applyTo
-    .replaceAll("`applyTo`-scoped", "`paths`-scoped")
-    .replaceAll(keep, ".github/agents/lessons.md");
+    .replaceAll("`applyTo`-scoped", "`paths`-scoped");
 }
 
 // The files that create or bootstrap other agents/skills. In this repo .claude/ is generated, so anything

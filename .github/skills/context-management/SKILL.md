@@ -98,8 +98,8 @@ artifacts, in this priority order, instead of replaying full history:
    session's opening message) — a report left only in the closed chat cannot
    re-ground anything.
 4. **Todo/task state** — whatever tracks in-progress vs completed items.
-5. **`lessons.md`** (see `self-learning`) — durable lessons already logged, so
-   a fresh session doesn't rediscover the same gap.
+5. **The project's agents, skills, and instructions** — rules already
+   improved via `self-learning`, so a fresh session doesn't rediscover the same gap.
 
 A fresh session should be able to resume productively from (1)-(5) alone,
 without needing the previous session's raw transcript. If it can't, that's a
@@ -197,7 +197,7 @@ end-of-task formality:
       not just assumed absent
 - [ ] The reset-vs-continue decision was made deliberately, not by default
 - [ ] If reset, re-grounding used durable artifacts (instructions, plan,
-      checkpoint, lessons.md), not a full transcript replay
+      checkpoint), not a full transcript replay
 - [ ] A checkpoint/session-report exists at the point of any session boundary
 - [ ] Delegated/accepted units of work are sized to fit comfortably in one
       session (see `planning-and-task-breakdown` sizing table)

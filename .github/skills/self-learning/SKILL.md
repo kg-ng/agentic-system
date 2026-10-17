@@ -1,11 +1,11 @@
 ---
 name: self-learning
 description: >
-  Continuous self-improvement loop for this agentic system. Use during and after
-  any non-trivial task to catch drift between agents/skills/instructions, systemic
-  gaps, and recurring defect classes — then log them as durable lessons. Use
-  explicitly when asked to "self-learn", "review the agentic system", or "log a
-  lesson", and passively at the close of every significant task.
+  Continuous improvement loop for the agents, skills, and instructions in use. Use
+  during and after any non-trivial task to catch drift between agents/skills/
+  instructions, systemic gaps, and recurring defect classes — then fix the guard
+  rail itself. Use explicitly when asked to "self-learn", "review the agentic
+  system", or "learn from this", and passively at the close of every significant task.
 ---
 
 # Self-Learning
@@ -15,11 +15,15 @@ description: >
 Agents drift. A rule added to one reviewer doesn't make it into a sibling reviewer.
 A defect class gets fixed once and recurs elsewhere. A skill or instruction file
 quietly stops matching the code it describes. This skill turns those observations
-into a durable, versioned record — a `lessons.md` file — so the same gap is never
-rediscovered twice.
+into fixes **in the guard rails themselves** — the agent, skill, or instruction that
+should have caught the problem — so the same gap is not rediscovered twice.
+
+There is no lessons log. What a project learns belongs in that project's own agents,
+skills, and instructions, where every agent reads it automatically; a separate log
+file is something nobody is guaranteed to open.
 
 This is not a retraining pipeline and not a model fine-tune. It is a structured
-feedback loop: **observe → diagnose → log → fix-or-flag**, applied consistently by
+feedback loop: **observe → diagnose → fix-or-flag → verify**, applied consistently by
 whichever agent has visibility into the gap.
 
 ## When to Use
@@ -33,26 +37,23 @@ whichever agent has visibility into the gap.
   drift.
 - When a bug is fixed in one place that plausibly exists in an equivalent code path
   elsewhere.
-- Explicitly, when a user asks to "run self-learning", "check for agentic system
-  gaps", or "log a lesson".
+- Explicitly, when a user asks to "run self-learning" or "check for agentic system gaps".
 
-**When NOT to use:** Don't log speculation, style preferences, or one-off typos with
-no systemic cause. Don't duplicate an existing lesson — search first.
+**When NOT to use:** Don't encode speculation, style preferences, or one-off typos with
+no systemic cause. Don't add a rule that already exists — search first.
 
 ## The Loop
 
 ```
 1. OBSERVE   — something didn't get caught, or the same class of defect appeared twice
 2. DIAGNOSE  — find the root cause: missing rule, stale doc, drifted copy, no check at all
-3. LOG       — append a structured entry to lessons.md
-4. FIX-OR-FLAG
-   ├── Fix now if it's a small, safe, in-scope doc/rule update
-   └── Flag with a priority + owner if it requires a broader change or a decision
-5. VERIFY    — confirm the fix target file was actually updated, not just logged
+3. FIX-OR-FLAG
+   ├── Fix now if it's a small, safe, in-scope edit to an agent, skill, or instruction
+   └── Flag with a priority + target file if it needs a broader change or a decision
+4. VERIFY    — confirm the target file was actually updated, not just discussed
 ```
 
-Do not skip step 5. A logged-but-unfixed lesson is only useful if someone reads the
-log — a lesson with a merged fix is useful automatically.
+Do not skip step 4. A fix that was only described is not a fix.
 
 ## Step 1: Observe — Where Gaps Hide
 
@@ -85,42 +86,27 @@ For each observed gap, answer explicitly:
 | What's the smallest fix? | Add the check to the reviewer's required checklist |
 
 Root-cause it the same way you would a bug (see `debugging-and-error-recovery`) —
-don't log "reviewer missed it" without asking *why* the reviewer's rules didn't
+don't conclude "reviewer missed it" without asking *why* the reviewer's rules didn't
 cover it.
 
-## Step 3: Log
+## Step 3: Fix or Flag
 
-Append to `.github/agents/lessons.md` (create it if it doesn't exist). Never rewrite
-or delete prior entries — lessons are additive history.
+Put the fix where it will be applied automatically:
 
-Index-row format:
-
-```
-| YYYY-MM-DD | <short title> | <skill or file most relevant> | <fix in one line> |
-```
-
-Full-detail format (used in the referenced skill/agent file, or inline if no better
-home exists):
+| The gap is… | Fix it in… |
+|---|---|
+| A check a reviewer should always run | That agent's checklist |
+| A procedure or pattern many agents need | The relevant skill |
+| A rule tied to certain files | A path-scoped instructions file |
+| A cross-cutting convention | The project's top-level instructions |
 
 ```
-LESSON LEARNED (YYYY-MM-DD): <short title>
-Description: <what was found>
-Root cause:  <why it wasn't caught before>
-Fix:         <what rule or file should be added or updated>
-Add to:      <exact .github/ file path(s)>
-Priority:    HIGH | MEDIUM | LOW
----
-```
-
-## Step 4: Fix or Flag
-
-```
-Is the fix a small, safe doc/rule update in a file you already have open?
+Is the fix a small, safe edit in a file you already have open?
 ├── YES → make the edit now, in the same task, before moving to commit
 └── NO (requires a larger change or a user decision)
     → Flag with Priority + exact target file(s)
     → Surface to the user before closing the task
-    → Do not silently defer — a flagged-and-forgotten lesson is the same failure again
+    → Do not silently defer — a flagged-and-forgotten gap is the same failure again
 ```
 
 Priority guide:
@@ -128,14 +114,14 @@ Priority guide:
 - **MEDIUM** — quality/consistency gap that will cause rework but not an incident
 - **LOW** — cosmetic drift, naming, or documentation polish
 
-## Step 5: Verify
+## Step 4: Verify
 
 Before closing the task:
 
-- [ ] The lesson is in `lessons.md` with today's date
 - [ ] If fixed now: the target file was actually edited — re-open it and confirm
 - [ ] If flagged: the user has seen the Priority and target file, not just an internal note
-- [ ] No duplicate entry was created — searched existing table first
+- [ ] The rule was not already present elsewhere — searched first, no duplicate added
+- [ ] Where a script or check can catch the defect mechanically, it was added to the project's checks
 
 ## Applying This Across Multiple Repos
 
@@ -143,31 +129,30 @@ If this agentic system is dropped into more than one project, treat cross-projec
 consistency checks as a first-class activity, not an occasional audit:
 - Diff shared agents/skills (anything meant to be identical across projects) against
   each other periodically.
-- If a fix is made to a shared agent/skill in one project, log a lesson noting every
-  other project that needs the same fix.
+- If a fix is made to a shared agent/skill in one project, tell the user which other
+  projects need the same fix.
 
 ## Common Rationalizations
 
 | Rationalization | Reality |
 |---|---|
-| "It's a one-off, not worth logging" | If it happened once without a systemic cause, a one-line note still prevents re-debugging it later. |
-| "I'll log it at the end of the session" | Session context gets lost. Log the moment you observe it. |
-| "The user didn't ask for a lesson" | This protocol is passive and should run regardless of being explicitly asked. |
-| "This is basically the same as an earlier lesson" | Check first. If truly identical, don't duplicate — if related but distinct, log as a new row referencing the old one. |
-| "Fixing it now is out of scope for this task" | A same-file, low-risk doc/rule fix is always in scope. Only route out-of-scope for actual code changes elsewhere. |
+| "It's a one-off, not worth encoding" | Check whether it has a systemic cause first; if it does, the checker needs the rule. |
+| "I'll fix the guard rail at the end of the session" | Session context gets lost. Fix it the moment you observe it. |
+| "The user didn't ask me to improve the agents" | This protocol is passive and should run regardless of being explicitly asked. |
+| "A similar rule already exists somewhere" | Read it. If it covers the case, point to it; if not, extend it rather than adding a second copy. |
+| "Fixing it now is out of scope for this task" | A same-file, low-risk rule fix is always in scope. Only route out-of-scope for actual code changes elsewhere. |
 
 ## Red Flags
 
-- A drifted shared agent (e.g. `rubber-duck`) found and not logged
-- The same defect class flagged twice in the same session without a systemic lesson entry
-- A HIGH priority lesson logged but not surfaced to the user before task close
-- Lessons file edited to remove or rewrite history instead of appending
+- A drifted shared agent (e.g. `rubber-duck`) found and left alone
+- The same defect class flagged twice in the same session with no change to the checker
+- A HIGH priority gap not surfaced to the user before task close
+- A rule added by copy-paste into several files instead of one skill they all reference
 - A task closed without asking "did any agent/skill/instruction fail to catch something?"
 
 ## Verification
 
-- [ ] Lesson(s) logged to `lessons.md`, additive (not destructive)
 - [ ] Root cause identified, not just symptom described
 - [ ] Fix applied now (if safe/in-scope) or explicitly flagged with priority + target + surfaced to user
-- [ ] No duplicate of an existing lesson
-- [ ] Cross-project drift, if found, notes every affected location
+- [ ] No duplicate of an existing rule
+- [ ] Cross-project drift, if found, names every affected location

@@ -107,7 +107,7 @@ Result: <N> bugs found.
 
 ## Self-Learning
 
-If you find a bug pattern not covered above, log it via the `self-learning`
+If you find a bug pattern not covered above, apply the `self-learning`
 skill so the check list here gets updated for next time.
 
 ## Token Efficiency

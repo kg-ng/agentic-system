@@ -70,8 +70,8 @@ Recommended action: REFACTOR_NOW | SCHEDULE | DEFER
 
 ## Self-Learning
 
-If you find a gap in an existing instructions/agent/skill file, log it via the
-`self-learning` skill.
+If you find a gap in an existing instructions/agent/skill file, apply the
+`self-learning` skill to fix it.
 
 ## Token Efficiency
 

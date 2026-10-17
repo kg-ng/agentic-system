@@ -71,8 +71,8 @@ New agents/skills/instructions should go through `agent-builder` (backed by the
 `create-agent-or-skill` skill), which does a mandatory web-research pass before
 drafting — checking official docs and comparable published agent-system designs
 for current best practice, rather than drafting purely from static knowledge.
-Drift and recurring gaps are tracked via the `self-learning` skill, logged to
-`.github/agents/lessons.md`.
+Drift and recurring gaps are handled via the `self-learning` skill, which fixes the
+agent, skill, or instruction that missed them.
 
 ## Securing the agentic system itself
 Beyond securing the code an agent works on, this platform includes skills
