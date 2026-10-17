@@ -150,6 +150,9 @@ committing, and never judge overlap with an existing agent/skill from its descri
 # Cross-references resolve and every agent declares a tools allowlist
 bash scripts/check-references.sh
 
+# Regenerate the Claude Code layout, then confirm it matches
+node scripts/build-claude.mjs && node scripts/build-claude.mjs --check
+
 # Every agent file has frontmatter
 for f in .github/agents/*.agent.md; do
   head -1 "$f" | grep -q "^---" || echo "MISSING FRONTMATTER: $f"

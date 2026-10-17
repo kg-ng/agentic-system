@@ -50,6 +50,21 @@ kind, not tied to any specific company's architecture or domain model.
    project-specific data/config in the consuming repo — keep it out of
    these generic agent/skill definitions so this platform stays reusable.
 
+## Using it with Claude Code
+`.github/` is the single source of truth (Copilot layout). The Claude Code layout —
+`.claude/agents`, `.claude/skills`, `.claude/rules`, and `CLAUDE.md` — is **generated**
+from it; never edit those files by hand.
+
+```bash
+node scripts/build-claude.mjs           # regenerate after changing anything in .github/
+node scripts/build-claude.mjs --check   # fails if the generated files are out of date
+bash scripts/check-references.sh        # dangling references, tools allowlists, tool names
+```
+
+To use it in another project, copy `.claude/` and `CLAUDE.md` into that project (or
+into `~/.claude/` for personal use). No plugin install is involved — everything is
+plain, readable files.
+
 ## Extending this system
 
 New agents/skills/instructions should go through `agent-builder` (backed by the
