@@ -144,6 +144,9 @@ Before considering the new file done:
 ## Step 6 — Validate
 
 ```bash
+# Cross-references resolve and every agent declares a tools allowlist
+bash scripts/check-references.sh
+
 # Every agent file has frontmatter
 for f in .github/agents/*.agent.md; do
   head -1 "$f" | grep -q "^---" || echo "MISSING FRONTMATTER: $f"
