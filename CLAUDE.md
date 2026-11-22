@@ -75,6 +75,16 @@ project it may have been inspired by.
 - `merge-conflict` — resolves git merge conflicts without regressions.
 - `agent-builder` — builds new agents/skills/instructions for this system itself,
   researching the web first for current best practice (see Meta below).
+- `qa-gate-designer` — writes the test gates for a ticket's acceptance criteria
+  before implementation starts; owns the repo's standing definition-of-done.
+  Never writes implementation code.
+- `qa-verifier` — independently re-runs every gate after implementation and any
+  cross-review, probes for breakage the gates didn't cover, reports evidence.
+  Never edits code. Forms an evaluator-optimizer pair with `qa-gate-designer` —
+  the same agent must never play both roles on one ticket.
+- `constants-checker` — read-only audit for constants hygiene (hardcoded
+  literals that should be named constants, duplicate constant values,
+  wrong-file placement). Distinct from `code-reviewer`/`bloat-reviewer`.
 
 ### Shared
 - `commit` — stages and commits approved changes with Conventional
@@ -109,8 +119,11 @@ Paired with the `ai-architecture-advisor` agent.
 
 Meta (agentic-system self-management): `multi-agent-review` (propose-critique-
 revise loop with a tier gate), `adversarial-design-debate` (FOR/AGAINST design
-review with business/cost/security rounds), `self-learning` (continuous
-improvement loop that fixes the agent/skill/instruction that missed a gap), `setup-agent-system`
+review with a SKIP/LIGHT/FULL tier gate and business/cost/security rounds at
+FULL tier), `compact-reports` (fixed short format for agent-to-planner reports
+and delegation briefs — never for anything a human reads), `self-learning`
+(continuous improvement loop that fixes the agent/skill/instruction that missed
+a gap), `setup-agent-system`
 (bootstrapping this platform into a new/existing project), `create-agent-or-skill`
 (procedure for adding a new agent/skill/instructions file — includes a mandatory
 web-research step; paired with the `agent-builder` agent), `verify-before-concluding`

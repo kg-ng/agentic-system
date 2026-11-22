@@ -65,11 +65,19 @@ Recommend one option with a one-line reason. Wait for explicit selection.
 | Commit approved changes | `commit` | — |
 | Docs sync | `docs-writer` | — |
 | Bloat/scope-creep audit (any change) | `bloat-reviewer` | — |
+| Design test gates before coding a non-trivial ticket | `qa-gate-designer` | — |
+| Independent post-implementation QA (any non-trivial ticket) | `qa-verifier` | — |
+| Constants hygiene audit (any change touching constants) | `constants-checker` | — |
 
 For any code change, run one review pass (`rubber-duck` for logic/design,
 `code-reviewer` for correctness/security, `qa-reviewer` for frontend
 runtime safety) before considering the task done. `bloat-reviewer` should
 also run whenever a change adds new files, dependencies, or abstractions.
+For any non-trivial ticket, `qa-gate-designer` writes the gates before
+implementation starts and `qa-verifier` independently re-runs them after —
+never let the same agent (or the implementer) play both roles.
+`constants-checker` runs alongside `code-reviewer`/`bloat-reviewer` whenever
+a change adds or touches constants.
 
 ### Build/test gate (never skip for code changes)
 Run the project's build/test command before any review pass and before the
