@@ -13,6 +13,19 @@ review. Examples: "should this become its own service?", "should we move
 validation into a middleware layer?", "should we adopt event-driven instead of
 synchronous calls here?"
 
+## Debate Tier Gate
+
+Evaluate the decision before running any rounds. Pick the tier — mirrors `multi-agent-review`'s
+SKIP/SINGLE/FULL gate. Not every design question needs all 7 rounds.
+
+| Tier | Condition | Action |
+|---|---|---|
+| SKIP | Routine code-review-level choice, not an architecture decision | No debate — use `multi-agent-review` instead |
+| LIGHT | Small design choice, clear best answer, low blast radius | Rounds 2-4 (Advocate → Challenger → Rebuttal) only, then Moderator Verdict. Skip Rounds 5-7 |
+| FULL | New service boundary, new integration pattern, hard to reverse once shipped | Full 7-round debate below |
+
+**Default to LIGHT when unsure the decision is "significant."**
+
 ## Roles
 
 | Role | Agent | Job |
@@ -154,8 +167,10 @@ Recommended next step: <what the requester should do now>
 
 ## Rules
 
+- Run the Debate Tier Gate first
 - Show every position block to the user in real time — never buffer
 - Maximum 3 Advocate ↔ Challenger exchange rounds — after that the Moderator calls it
-- Never skip the Challenger role
-- Explicitly state (don't silently skip) any Round 5–7 role that doesn't apply
+- Never skip the Challenger role, even at LIGHT tier
+- At LIGHT tier, skip Rounds 5-7 and go straight from Round 4 to the Moderator Verdict
+- Explicitly state (don't silently skip) any Round 5–7 role that doesn't apply at FULL tier
 - The debate does not constitute a code change — no commit needed
