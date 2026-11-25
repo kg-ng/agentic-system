@@ -123,6 +123,42 @@ Before closing the task:
 - [ ] The rule was not already present elsewhere — searched first, no duplicate added
 - [ ] Where a script or check can catch the defect mechanically, it was added to the project's checks
 
+## Generator/Verifier/Coach Separation (gap check, 2026-11 video comparison)
+
+A Stanford/Claude talk on self-improving agents frames this as three separate roles that
+must never collapse into one: a **Generator** (does the task), a **Verifier** (read-only,
+grades against an answer key, never fixes anything itself), and a **Coach** (drafts one
+candidate change at a time, never edits the live file directly). The core principle: *the
+same agent pass should never both do the work and grade/fix its own work* — "you can't
+grade your own homework."
+
+This skill's loop, as originally written, lets one agent pass observe, diagnose, AND edit
+the live agent/skill file in the same breath for anything it judges "small and safe" — no
+independent check, no draft/candidate step. That is closer to the video's "Level 3, fully
+autonomous" than the "Level 2: AI suggests, human approves" sweet spot this system
+otherwise follows everywhere else (every commit agent in this system requires explicit
+human confirmation before staging or committing anything). Apply this tightened rule
+going forward:
+
+- **Verifier separation, lightweight form**: before editing any live `.claude/agents/*.md`,
+  `SKILL.md`, or `.claude/rules/*.md` file in Step 3, re-read the target file fresh (not
+  from memory of the diagnosis) and confirm the proposed fix actually matches what's on
+  disk — this is the minimum viable "independent check" without standing up a separate
+  sub-agent for every gap. Treat your own Step 2 diagnosis as a hypothesis to confirm
+  against the file, not as already-proven.
+- **No fully-autonomous auto-apply**: "small, safe, in-scope" in Step 3 means a doc/rule
+  clarification with no behavior change (wording, missing cross-reference, stale example) —
+  it does NOT mean auto-applying anything that changes what an agent is *allowed* to do
+  (new auto-apply permission, loosened gate, new autonomy grant). Those always route through
+  Priority HIGH and explicit user confirmation, same as any other HIGH-priority gap.
+- **No answer key yet for agent-quality**: unlike code (which has tests as a verifier), this
+  system has no equivalent "does this agent/skill edit actually improve outcomes" eval. Don't
+  manufacture one for its own sake — but don't claim Step 4's "re-open it and confirm" is
+  equivalent to the video's answer-key verification. It confirms the edit was *made*, not
+  that it was *correct*. For HIGH priority agent-system changes, a second reviewer (another
+  agent invocation in a fresh context, or the user) should read the diff before it's treated
+  as settled — this is the closest practical equivalent to an independent Verifier here.
+
 ## Applying This Across Multiple Repos
 
 If this agentic system is dropped into more than one project, treat cross-project
